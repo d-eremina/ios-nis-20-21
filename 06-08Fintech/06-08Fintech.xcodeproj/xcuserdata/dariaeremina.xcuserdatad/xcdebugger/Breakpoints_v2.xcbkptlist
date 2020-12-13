@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "CA32AB4C-9BEB-4944-8D08-0FDE63DBAB1E"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AA276DA8-0A8A-43E4-9E21-E0798B97DC9A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "06-08Fintech/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "requestQuote(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AA276DA8-0A8A-43E4-9E21-E0798B97DC9A - 9d0ebc2a1a2f2f05"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "_6_08Fintech.ViewController.(requestQuote in _1E1E86B695B7CC16A0E403DCBE76A709)(for: Swift.String) -&gt; ()"
+                  moduleName = "06-08Fintech"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dariaeremina/ios_nis/06-08Fintech/06-08Fintech/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "745">
+               </Location>
+               <Location
+                  uuid = "AA276DA8-0A8A-43E4-9E21-E0798B97DC9A - 29a2946655d4bfaf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in _6_08Fintech.ViewController.(requestQuote in _1E1E86B695B7CC16A0E403DCBE76A709)(for: Swift.String) -&gt; ()"
+                  moduleName = "06-08Fintech"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dariaeremina/ios_nis/06-08Fintech/06-08Fintech/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "237">
+               </Location>
+               <Location
+                  uuid = "AA276DA8-0A8A-43E4-9E21-E0798B97DC9A - 29a2946655d4bf88"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in _6_08Fintech.ViewController.(requestQuote in _1E1E86B695B7CC16A0E403DCBE76A709)(for: Swift.String) -&gt; ()"
+                  moduleName = "06-08Fintech"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dariaeremina/ios_nis/06-08Fintech/06-08Fintech/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "859">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
