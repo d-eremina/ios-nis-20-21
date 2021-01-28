@@ -40,19 +40,19 @@
                                                 <view clipsSubviews="YES" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rkp-Ib-LbS">
                                                     <rect key="frame" x="0.0" y="311" width="250" height="69"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RkE-6l-lhN">
+                                                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K62-SR-Yzp">
                                                             <rect key="frame" x="90.5" y="6.5" width="69" height="56"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="69" id="hBF-N7-YiS"/>
-                                                                <constraint firstAttribute="height" constant="56" id="s2Y-yd-DZN"/>
+                                                                <constraint firstAttribute="width" constant="69" id="w7k-nV-mWF"/>
+                                                                <constraint firstAttribute="height" constant="56" id="xsc-Av-FOy"/>
                                                             </constraints>
                                                             <color key="tintColor" systemColor="systemRedColor"/>
                                                             <state key="normal" image="heart" catalog="system"/>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="RkE-6l-lhN" firstAttribute="centerX" secondItem="Rkp-Ib-LbS" secondAttribute="centerX" id="7kc-uT-dWz"/>
-                                                        <constraint firstItem="RkE-6l-lhN" firstAttribute="centerY" secondItem="Rkp-Ib-LbS" secondAttribute="centerY" id="PYV-4p-84J"/>
+                                                        <constraint firstItem="K62-SR-Yzp" firstAttribute="centerX" secondItem="Rkp-Ib-LbS" secondAttribute="centerX" id="UcB-eh-W6g"/>
+                                                        <constraint firstItem="K62-SR-Yzp" firstAttribute="centerY" secondItem="Rkp-Ib-LbS" secondAttribute="centerY" id="Xmm-xX-81A"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aa-xW-Cqg">
@@ -104,7 +104,7 @@
                                             <outlet property="cityLabel" destination="8aa-xW-Cqg" id="FtM-ya-lcC"/>
                                             <outlet property="countryLabel" destination="tGk-fM-ioV" id="FWc-xG-Vg8"/>
                                             <outlet property="imageView" destination="dmY-Sb-msp" id="Nwa-wi-lr5"/>
-                                            <outlet property="likeButton" destination="RkE-6l-lhN" id="CHH-E8-X65"/>
+                                            <outlet property="likeButton" destination="K62-SR-Yzp" id="jEM-bt-mAx"/>
                                             <outlet property="priceLabel" destination="IBg-qw-1p8" id="DfD-Fq-fGh"/>
                                             <outlet property="totalDaysLabel" destination="QoU-K9-XW5" id="Azy-G7-qt9"/>
                                         </connections>
