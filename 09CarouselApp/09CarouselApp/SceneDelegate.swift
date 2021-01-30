@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  09CarouselApp
 //
-//  Created by Daria Eremina on 19.01.2021.
+//  Created by Daria Eremina on 30.01.2021.
 //
 
 import UIKit

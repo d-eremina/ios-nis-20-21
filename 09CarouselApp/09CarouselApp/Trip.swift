@@ -2,12 +2,10 @@
 //  Trip.swift
 //  09CarouselApp
 //
-//  Created by Daria Eremina on 21.01.2021.
+//  Created by Daria Eremina on 31.01.2021.
 //
 
 import UIKit
-
-
 struct Trip {
     var tripId = ""
     var city = ""
@@ -16,9 +14,9 @@ struct Trip {
     var price:Int = 0
     var totalDays:Int = 0
     var isLiked = false
-    
-    init(tripId: String, city: String, country: String, featuredImage:UIImage!,
-         price: Int, totalDays: Int, isLiked: Bool) {
+    init(tripId: String, city: String, country: String, featuredImage:
+            UIImage!, price: Int, totalDays: Int, isLiked: Bool)
+    {
         self.tripId = tripId
         self.city = city
         self.country = country
