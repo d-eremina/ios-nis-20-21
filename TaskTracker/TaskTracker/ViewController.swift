@@ -10,20 +10,20 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
-    var tasks = [String]()
+    var tasks = [Task]()
+    
+    var update: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Tasks"
         tableView.delegate = self
         tableView.dataSource = self
-
+        
         if !UserDefaults().bool(forKey: "setup") {
             UserDefaults().set(true, forKey: "setup")
             UserDefaults().set(0, forKey: "count")
-            UserDefaults().set(0, forKey: "id")
         }
-
         
         updateTasks()
     }
@@ -31,16 +31,22 @@ class ViewController: UIViewController {
     func updateTasks() {
         tasks.removeAll()
         
-        guard let count = UserDefaults().value(forKey: "count") as? Int else {
+        guard let id = UserDefaults().value(forKey: "count") as? Int else {
             return
         }
         
-        for x in 0..<count {
-            if let task = UserDefaults().value(forKey: "task_\(x + 1)") as? String{
-                tasks.append(task)
+        Task.last_id = id
+        
+        for x in 0...Task.last_id {
+            do {
+                if let decoded  = UserDefaults.standard.object(forKey: "task_\(x)") as? Data {
+                    let decodedTeams = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded) as! Task
+                    tasks.append(decodedTeams)
+                }
+            } catch {
+                
             }
         }
-        
         tableView.reloadData()
     }
     
@@ -54,7 +60,7 @@ class ViewController: UIViewController {
         }
         navigationController?.pushViewController(viewController, animated: true)
     }
-
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -77,18 +83,22 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = tasks[indexPath.row]
+        cell.textLabel?.text = tasks[indexPath.row].heading 
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.beginUpdates()
+            
+            let currentTask = tasks[indexPath.row]
             tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
             tableView.endUpdates()
             
-            // Update UserDefaults
+            UserDefaults().setValue(nil, forKey: "task_\(currentTask.id)")
+            update?()
         }
     }
     

@@ -15,6 +15,7 @@
 		161292BC25D4521E00B0063C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 161292BA25D4521E00B0063C /* LaunchScreen.storyboard */; };
 		161292C525D465A100B0063C /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161292C425D465A100B0063C /* EntryViewController.swift */; };
 		161292C825D465C000B0063C /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161292C725D465C000B0063C /* TaskViewController.swift */; };
+		16EE250225D5BA97000FEA7E /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE250125D5BA97000FEA7E /* Task.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		161292BD25D4521E00B0063C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		161292C425D465A100B0063C /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		161292C725D465C000B0063C /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		16EE250125D5BA97000FEA7E /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				161292BD25D4521E00B0063C /* Info.plist */,
 				161292C425D465A100B0063C /* EntryViewController.swift */,
 				161292C725D465C000B0063C /* TaskViewController.swift */,
+				16EE250125D5BA97000FEA7E /* Task.swift */,
 			);
 			path = TaskTracker;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 				161292C525D465A100B0063C /* EntryViewController.swift in Sources */,
 				161292C825D465C000B0063C /* TaskViewController.swift in Sources */,
 				161292B025D4521C00B0063C /* AppDelegate.swift in Sources */,
+				16EE250225D5BA97000FEA7E /* Task.swift in Sources */,
 				161292B225D4521C00B0063C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
