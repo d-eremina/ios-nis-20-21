@@ -9,7 +9,7 @@ import UIKit
 
 class TaskViewController: UIViewController {
     @IBOutlet var label: UILabel!
-    @IBOutlet var annotation: UILabel!
+    @IBOutlet var annotation: UITextView!
     
     var task: Task?
     var update: (() -> Void)?
@@ -19,14 +19,5 @@ class TaskViewController: UIViewController {
         
         label.text = task?.heading
         annotation.text = task?.annotation
-        
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteTask))
     }
-    
-    @objc func deleteTask(){
-        // UserDefaults().setValue(nil, forKey: "task_\(task?.id ?? -1)")
-        update?()
-        navigationController?.popViewController(animated: true)
-    }
-    
 }
