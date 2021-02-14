@@ -15,7 +15,7 @@
 		161292BC25D4521E00B0063C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 161292BA25D4521E00B0063C /* LaunchScreen.storyboard */; };
 		161292C525D465A100B0063C /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161292C425D465A100B0063C /* EntryViewController.swift */; };
 		161292C825D465C000B0063C /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161292C725D465C000B0063C /* TaskViewController.swift */; };
-		16EE250225D5BA97000FEA7E /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE250125D5BA97000FEA7E /* Task.swift */; };
+		16B81BA625D7246B00420C5B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 16B81BA425D7246B00420C5B /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		161292BD25D4521E00B0063C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		161292C425D465A100B0063C /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		161292C725D465C000B0063C /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
-		16EE250125D5BA97000FEA7E /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		16B81BA525D7246B00420C5B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +69,7 @@
 				161292B825D4521E00B0063C /* Assets.xcassets */,
 				161292BA25D4521E00B0063C /* LaunchScreen.storyboard */,
 				161292BD25D4521E00B0063C /* Info.plist */,
-				16EE250125D5BA97000FEA7E /* Task.swift */,
+				16B81BA425D7246B00420C5B /* Model.xcdatamodeld */,
 			);
 			path = TaskTracker;
 			sourceTree = "<group>";
@@ -157,8 +157,8 @@
 				161292B425D4521C00B0063C /* ViewController.swift in Sources */,
 				161292C525D465A100B0063C /* EntryViewController.swift in Sources */,
 				161292C825D465C000B0063C /* TaskViewController.swift in Sources */,
+				16B81BA625D7246B00420C5B /* Model.xcdatamodeld in Sources */,
 				161292B025D4521C00B0063C /* AppDelegate.swift in Sources */,
-				16EE250225D5BA97000FEA7E /* Task.swift in Sources */,
 				161292B225D4521C00B0063C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,6 +359,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		16B81BA425D7246B00420C5B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				16B81BA525D7246B00420C5B /* Model.xcdatamodel */,
+			);
+			currentVersion = 16B81BA525D7246B00420C5B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 161292A425D4521C00B0063C /* Project object */;
 }

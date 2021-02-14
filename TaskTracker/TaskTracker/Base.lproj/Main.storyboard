@@ -43,6 +43,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="gDY-Mm-qgO" kind="showDetail" trigger="accessoryAction" id="SBZ-pj-g8g"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -60,6 +63,7 @@
                         <barButtonItem key="rightBarButtonItem" image="plus" catalog="system" id="Zob-mN-tTC">
                             <connections>
                                 <action selector="didTapAdd" destination="BYZ-38-t0r" id="fPN-6E-Hqp"/>
+                                <segue destination="Mak-Kg-Y5s" kind="show" id="wpL-gf-2Mq"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -80,7 +84,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lrf-rs-WYr">
-                                <rect key="frame" x="20" y="44" width="374" height="415"/>
+                                <rect key="frame" x="20" y="88" width="374" height="415"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lyO-RL-mhh">
                                         <rect key="frame" x="0.0" y="161" width="374" height="246"/>
@@ -112,7 +116,7 @@
                                 </constraints>
                             </view>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="6Rg-n5-KJ9">
-                                <rect key="frame" x="20" y="467" width="374" height="216"/>
+                                <rect key="frame" x="20" y="511" width="374" height="216"/>
                             </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JBj-D0-M6w"/>
@@ -127,6 +131,13 @@
                             <constraint firstItem="6Rg-n5-KJ9" firstAttribute="top" secondItem="Lrf-rs-WYr" secondAttribute="bottom" constant="8" id="zTe-aH-nIv"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="thN-WJ-xhZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="3xZ-nR-7VU">
+                            <connections>
+                                <action selector="saveTask" destination="Mak-Kg-Y5s" id="W3C-MI-J41"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="annotation" destination="lyO-RL-mhh" id="0fS-KU-81B"/>
                         <outlet property="date" destination="6Rg-n5-KJ9" id="LLY-Nn-TEF"/>
@@ -146,7 +157,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hM0-nF-U4y">
-                                <rect key="frame" x="20" y="44" width="374" height="60"/>
+                                <rect key="frame" x="20" y="88" width="374" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="ZYo-Q9-nYT"/>
                                 </constraints>
@@ -155,33 +166,54 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="A3g-pU-Swk">
-                                <rect key="frame" x="20" y="112" width="374" height="500"/>
+                                <rect key="frame" x="20" y="156" width="374" height="456"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEb-06-CfV">
+                                <rect key="frame" x="20" y="812" width="374" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Yza-WQ-cMj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NmY-ZQ-Cci"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="A3g-pU-Swk" firstAttribute="top" secondItem="hM0-nF-U4y" secondAttribute="bottom" constant="8" symbolic="YES" id="5zg-9N-BZ3"/>
+                            <constraint firstItem="NmY-ZQ-Cci" firstAttribute="trailing" secondItem="kEb-06-CfV" secondAttribute="trailing" constant="20" id="Ctn-AK-ERL"/>
+                            <constraint firstItem="kEb-06-CfV" firstAttribute="bottom" secondItem="NmY-ZQ-Cci" secondAttribute="bottom" id="F27-4a-b1l"/>
                             <constraint firstItem="A3g-pU-Swk" firstAttribute="leading" secondItem="NmY-ZQ-Cci" secondAttribute="leading" constant="20" id="KLf-C0-Gta"/>
                             <constraint firstItem="NmY-ZQ-Cci" firstAttribute="trailing" secondItem="hM0-nF-U4y" secondAttribute="trailing" constant="20" id="OZt-0s-tTr"/>
                             <constraint firstItem="hM0-nF-U4y" firstAttribute="top" secondItem="NmY-ZQ-Cci" secondAttribute="top" id="PuP-B7-iSl"/>
                             <constraint firstItem="NmY-ZQ-Cci" firstAttribute="bottom" secondItem="A3g-pU-Swk" secondAttribute="bottom" constant="250" id="WGK-NZ-amu"/>
+                            <constraint firstItem="kEb-06-CfV" firstAttribute="leading" secondItem="NmY-ZQ-Cci" secondAttribute="leading" constant="20" id="Wcg-Tm-NX1"/>
                             <constraint firstItem="hM0-nF-U4y" firstAttribute="leading" secondItem="NmY-ZQ-Cci" secondAttribute="leading" constant="20" id="c7x-um-1OR"/>
                             <constraint firstItem="NmY-ZQ-Cci" firstAttribute="trailing" secondItem="A3g-pU-Swk" secondAttribute="trailing" constant="20" id="fvl-U1-Ubt"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="acb-Cf-v6d">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="rCq-0B-HRw">
+                            <connections>
+                                <action selector="editTask" destination="gDY-Mm-qgO" id="DKw-fP-35c"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="annotation" destination="A3g-pU-Swk" id="z9H-MQ-1vm"/>
+                        <outlet property="date" destination="kEb-06-CfV" id="Lgr-OD-g8g"/>
                         <outlet property="label" destination="hM0-nF-U4y" id="ja1-hO-JXh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XOF-ha-koi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1957.9710144927537" y="75.669642857142847"/>
+            <point key="canvasLocation" x="1878" y="76"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Os8-Gb-xeW">

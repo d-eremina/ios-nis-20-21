@@ -5,85 +5,48 @@
 //  Created by Daria Eremina on 10.02.2021.
 //
 
+import CoreData
 import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
-    var tasks = [Task]()
-    // var update: (() -> Void)?
-    
+    var tasks: [NSManagedObject] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
-        if !UserDefaults().bool(forKey: "setup") {
-            UserDefaults().set(true, forKey: "setup")
-            UserDefaults().set(0, forKey: "count")
-        }
-        
-        updateTasks()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+      super.viewWillAppear(animated)
+      updateTasks()
+    }
+
     
     func updateTasks() {
         tasks.removeAll()
-        
-        guard let id = UserDefaults().value(forKey: "count") as? Int else {
+        guard let appDelegate =
+          UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
-        Task.last_id = id
+        let managedContext =
+          appDelegate.persistentContainer.viewContext
         
-        for x in 0...Task.last_id {
-            do {
-                print("check task_\(x)")
-                if let decoded  = UserDefaults.standard.object(forKey: "task_\(x)") as? Data {
-                    let decodedTeams = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(decoded) as! Task
-                    tasks.append(decodedTeams)
-                }
-            } catch {
-                
-            }
+        let fetchRequest =
+          NSFetchRequest<NSManagedObject>(entityName: "Task")
+        
+        do {
+          tasks = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+          print("Could not fetch. \(error), \(error.userInfo)")
         }
         tableView.reloadData()
     }
     
-    @IBAction func didTapAdd() {
-        let viewController = storyboard?.instantiateViewController(identifier: "Entry") as! EntryViewController
-        viewController.title = "New Task"
-        viewController.update = {
-            DispatchQueue.main.async {
-                self.updateTasks()
-            }
-        }
-        navigationController?.pushViewController(viewController, animated: true)
-        _ = viewController.view
-        viewController.saveNewTask()
-    }
-    
-    func editAction(at indexPath: IndexPath) -> UIContextualAction {
-        let currentTask = self.tasks[indexPath.row]
-        let action = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
-            let viewController = self.storyboard?.instantiateViewController(identifier: "Entry") as! EntryViewController
-            viewController.title = "Edit Task"
-            viewController.update = {
-                DispatchQueue.main.async {
-                    self.updateTasks()
-                }
-            }
-            self.navigationController?.pushViewController(viewController, animated: true)
-            _ = viewController.view
-            
-            viewController.editTask(currentTask: currentTask)
-            completion(true)
-        }
-        action.image = UIImage(contentsOfFile: "edit")
-        action.backgroundColor = UIColor(red: 0.95, green: 0.76, blue: 0.2, alpha: 1)
-        return action
-    }
-    
-    func completeAction(at indexPath: IndexPath) -> UIContextualAction {
+    /*func completeAction(at indexPath: IndexPath) -> UIContextualAction {
         let currentTask = tasks[indexPath.row]
         let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
             print("complete" + currentTask.heading)
@@ -96,26 +59,7 @@ class ViewController: UIViewController {
         action.image = UIImage(contentsOfFile: "edit")
         action.backgroundColor = UIColor(red: 0, green: 0.83, blue: 0.04, alpha: 1)
         return action
-    }
-    
-    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .normal, title: "Delete") { (action, view, completion) in
-            
-            self.tableView.beginUpdates()
-            
-            let currentTask = self.tasks[indexPath.row]
-            self.tasks.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            self.tableView.endUpdates()
-            UserDefaults().setValue(nil, forKey: "task_\(currentTask.id)")
-            print("delete task_\(currentTask.id)")
-            // self.update?()
-            completion(true)
-        }
-        action.backgroundColor = .red
-        return action
-    }
+    }*/
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -127,8 +71,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let viewController = storyboard?.instantiateViewController(identifier: "Task") as! TaskViewController
-        viewController.title = "New Task"
-        viewController.task = tasks[indexPath.row]
+        viewController.title = (tasks[indexPath.row] as! Task).heading
+        _ = viewController.view
+        let currentTask = tasks[indexPath.row] as! Task
+        viewController.label.text = currentTask.heading
+        viewController.annotation.text = currentTask.annotation
+        viewController.date.text = currentTask.date
+        viewController.task = currentTask
+        viewController.indexPath = indexPath
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -137,20 +87,38 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let task = tasks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = tasks[indexPath.row].heading
-        cell.detailTextLabel?.text = tasks[indexPath.row].date
+        cell.textLabel?.text = task.value(forKeyPath: "heading") as? String
+        cell.detailTextLabel?.text = task.value(forKeyPath: "date") as? String
         return cell
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let edit = editAction(at: indexPath)
-        let delete = deleteAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [delete, edit])
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let commit = tasks[indexPath.row]
+            
+            guard let appDelegate =
+                    UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            managedContext.delete(commit)
+            
+            tasks.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            do {
+                try managedContext.save()
+                updateTasks()
+            } catch let error as NSError {
+                print("Could not delete. \(error), \(error.userInfo)")
+            }
+        }
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    /*func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let complete = completeAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [complete])
-    }
+    }*/
 }
