@@ -12,10 +12,14 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var heading: UITextField!
     @IBOutlet var annotation: UITextView!
     @IBOutlet var date: UIDatePicker!
+    @IBOutlet var status: UIPickerView!
+    let pickerContent = ["New", "In Progress", "Done"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         heading.delegate = self
+        status.dataSource = self
+        status.delegate = self
         date.preferredDatePickerStyle = .compact
     }
     
@@ -24,7 +28,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         saveTask()
         return true
     }
-
+    
     @IBAction func saveTask() {
         guard let heading = heading.text, !heading.isEmpty else {
             return
@@ -34,8 +38,10 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        let taskStatus = pickerContent[status.selectedRow(inComponent: 0)]
+        
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm"
         let taskDate = dateFormatter.string(from: date.date)
         
         guard let appDelegate =
@@ -51,6 +57,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         savedTask.setValue(heading, forKey: "heading")
         savedTask.setValue(annotation, forKey: "annotation")
         savedTask.setValue(taskDate, forKey: "date")
+        savedTask.setValue(taskStatus, forKey: "status")
         
         do {
             try managedContext.save()
@@ -65,4 +72,18 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+}
+
+extension EntryViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerContent[row]
+    }
 }

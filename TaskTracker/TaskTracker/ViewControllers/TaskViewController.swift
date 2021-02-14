@@ -29,6 +29,7 @@ class TaskViewController: UIViewController {
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let viewController = storyboard?.instantiateViewController(identifier: "Entry") as! EntryViewController
+        viewController.navigationItem.setHidesBackButton(true, animated: true)
         _ = viewController.view
         let currentTask = task as! Task
         viewController.title = currentTask.heading

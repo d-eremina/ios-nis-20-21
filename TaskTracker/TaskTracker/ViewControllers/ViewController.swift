@@ -72,7 +72,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     func filterForSearchTextAndScopeButton(searchText: String, scopeButton: String = "All") {
         filteredTasks = tasks.filter {
             task in
-            let scopeMatch = (scopeButton == "All" || (((task as! Task).heading?.lowercased().contains(scopeButton.lowercased())) != nil))
+            let scopeMatch = (scopeButton == "All" || (task as! Task).status!.lowercased().contains(scopeButton.lowercased()))
             if (searchController.searchBar.text != "") {
                 let searchTextMatch = (task as! Task).heading?.lowercased().contains(searchText.lowercased())
                 return scopeMatch && searchTextMatch!
@@ -83,12 +83,41 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         tableView.reloadData()
     }
     
-    /*func completeAction(at indexPath: IndexPath) -> UIContextualAction {
-        let currentTask = tasks[indexPath.row]
+    func completeAction(at indexPath: IndexPath) -> UIContextualAction {
+        var commit: NSManagedObject!
         let action = UIContextualAction(style: .normal, title: "Done") { (action, view, completion) in
-            print("complete" + currentTask.heading)
+            if self.searchController.isActive {
+                commit = self.filteredTasks[indexPath.row]
+            } else {
+                commit = self.tasks[indexPath.row]
+            }
             
-            // TODO:
+            let currentTask = commit as! Task
+            
+            guard let appDelegate =
+                    UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            managedContext.delete(commit)
+            
+            self.tasks.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let entity = NSEntityDescription.entity(forEntityName: "Task",
+                                                    in: managedContext)!
+            let savedTask = NSManagedObject(entity: entity,
+                                            insertInto: managedContext)
+            savedTask.setValue(currentTask.heading, forKey: "heading")
+            savedTask.setValue(currentTask.annotation, forKey: "annotation")
+            savedTask.setValue(currentTask.date, forKey: "date")
+            savedTask.setValue("Done", forKey: "status")
+            do {
+                try managedContext.save()
+                self.updateTasks()
+            } catch let error as NSError {
+                print("Could not delete. \(error), \(error.userInfo)")
+            }
             
             
             completion(true)
@@ -96,7 +125,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
         action.image = UIImage(contentsOfFile: "edit")
         action.backgroundColor = UIColor(red: 0, green: 0.83, blue: 0.04, alpha: 1)
         return action
-    }*/
+    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -134,7 +163,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableViewCell
         
         let task: NSManagedObject!
         if searchController.isActive {
@@ -143,8 +172,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             task = tasks[indexPath.row]
         }
         
-        cell.textLabel?.text = task.value(forKeyPath: "heading") as? String
-        cell.detailTextLabel?.text = task.value(forKeyPath: "date") as? String
+        cell.heading.text = task.value(forKeyPath: "heading") as? String
+        cell.date.text = task.value(forKeyPath: "date") as? String
+        cell.status.text = task.value(forKeyPath: "status") as? String
+        cell.status.textColor = UIColor.black
+        if cell.status.text == "New" {
+            cell.status.textColor = UIColor.white
+            cell.statusBackground.backgroundColor = UIColor.red
+        } else if cell.status.text == "In Progress" {
+            cell.statusBackground.backgroundColor = UIColor.yellow
+        } else if cell.status.text == "Done" {
+            cell.statusBackground.backgroundColor = UIColor.green
+        }
         return cell
     }
     
@@ -176,8 +215,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    /*func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let complete = completeAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [complete])
-    }*/
+    }
 }
