@@ -25,15 +25,8 @@ struct Provider: IntentTimelineProvider {
         let userDefaults = UserDefaults(suiteName: "group.taskTrackerApp")
         let heading = userDefaults?.value(forKey: "heading") ?? "Here will be your nearest task"
         let date = userDefaults?.value(forKey: "date") ?? ""
-        
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        //let currentDate = Date()
-        //for hourOffset in 0 ..< 5 {
-        // _ = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
         let entry = SimpleEntry(dueDate: date as! String, heading: heading as! String, configuration: configuration)
         entries.append(entry)
-        //}
-        
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
@@ -57,7 +50,7 @@ struct TaskWidgetEntryView : View {
                     .frame(width: 50, height: 50)
                 
                 Text(entry.dueDate)
-                    .font(Font.system(size: 18, weight: .semibold, design: .default))
+                    .font(Font.system(size: 16, weight: .semibold, design: .default))
                     .foregroundColor(Color.black)
             }
             Text(entry.heading)

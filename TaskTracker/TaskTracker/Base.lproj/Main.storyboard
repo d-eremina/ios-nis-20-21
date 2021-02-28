@@ -165,23 +165,27 @@
                                 <rect key="frame" x="20" y="511" width="374" height="216"/>
                             </datePicker>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plu-zc-q17">
-                                <rect key="frame" x="20" y="726" width="374" height="136"/>
+                                <rect key="frame" x="20" y="735" width="374" height="127"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="127" id="3HL-II-Omn"/>
+                                    <constraint firstAttribute="width" constant="374" id="S4K-w0-5rU"/>
+                                </constraints>
                             </pickerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JBj-D0-M6w"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="plu-zc-q17" firstAttribute="bottom" secondItem="JBj-D0-M6w" secondAttribute="bottom" id="4je-fi-yTO"/>
+                            <constraint firstItem="plu-zc-q17" firstAttribute="top" secondItem="6Rg-n5-KJ9" secondAttribute="bottom" constant="8" symbolic="YES" id="6cH-m1-Su3"/>
                             <constraint firstItem="Lrf-rs-WYr" firstAttribute="leading" secondItem="JBj-D0-M6w" secondAttribute="leading" constant="20" id="6tI-ME-rDB"/>
-                            <constraint firstItem="plu-zc-q17" firstAttribute="top" secondItem="Lrf-rs-WYr" secondAttribute="bottom" constant="223" id="8xF-E0-G7w"/>
                             <constraint firstItem="JBj-D0-M6w" firstAttribute="trailing" secondItem="Lrf-rs-WYr" secondAttribute="trailing" constant="20" id="AGt-Zt-Li9"/>
                             <constraint firstItem="6Rg-n5-KJ9" firstAttribute="top" secondItem="Lrf-rs-WYr" secondAttribute="bottom" constant="8" symbolic="YES" id="Hgp-Xw-t2O"/>
-                            <constraint firstItem="plu-zc-q17" firstAttribute="leading" secondItem="JBj-D0-M6w" secondAttribute="leading" constant="20" id="Ira-HR-abj"/>
-                            <constraint firstItem="plu-zc-q17" firstAttribute="bottom" secondItem="JBj-D0-M6w" secondAttribute="bottom" id="NRo-Vf-J8a"/>
+                            <constraint firstItem="JBj-D0-M6w" firstAttribute="trailing" secondItem="plu-zc-q17" secondAttribute="trailing" constant="20" id="LWP-Ge-xkc"/>
                             <constraint firstItem="6Rg-n5-KJ9" firstAttribute="leading" secondItem="JBj-D0-M6w" secondAttribute="leading" constant="20" id="YLx-aJ-XoC"/>
                             <constraint firstItem="Lrf-rs-WYr" firstAttribute="top" secondItem="JBj-D0-M6w" secondAttribute="top" id="btf-MH-AJS"/>
-                            <constraint firstItem="JBj-D0-M6w" firstAttribute="trailing" secondItem="plu-zc-q17" secondAttribute="trailing" constant="20" id="guD-6k-VSM"/>
                             <constraint firstItem="JBj-D0-M6w" firstAttribute="trailing" secondItem="6Rg-n5-KJ9" secondAttribute="trailing" constant="20" id="nnf-jj-tKN"/>
                             <constraint firstItem="6Rg-n5-KJ9" firstAttribute="top" secondItem="Lrf-rs-WYr" secondAttribute="bottom" constant="8" id="zTe-aH-nIv"/>
+                            <constraint firstItem="plu-zc-q17" firstAttribute="leading" secondItem="JBj-D0-M6w" secondAttribute="leading" constant="20" id="zX4-JK-bfL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="thN-WJ-xhZ">
