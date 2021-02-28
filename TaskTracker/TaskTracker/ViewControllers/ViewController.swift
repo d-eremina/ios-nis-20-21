@@ -7,6 +7,7 @@
 
 import CoreData
 import UIKit
+import WidgetKit
 
 class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDelegate {
     @IBOutlet var tableView: UITableView!
@@ -14,7 +15,7 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     
     var tasks: [NSManagedObject] = []
     var filteredTasks: [NSManagedObject] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -23,10 +24,10 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     }
     
     override func viewWillAppear(_ animated: Bool) {
-      super.viewWillAppear(animated)
-      updateTasks()
+        super.viewWillAppear(animated)
+        updateTasks()
     }
-
+    
     
     func initSearchController() {
         searchController.loadViewIfNeeded()
@@ -44,22 +45,56 @@ class ViewController: UIViewController, UISearchResultsUpdating, UISearchBarDele
     func updateTasks() {
         tasks.removeAll()
         guard let appDelegate =
-          UIApplication.shared.delegate as? AppDelegate else {
+                UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
         let managedContext =
-          appDelegate.persistentContainer.viewContext
+            appDelegate.persistentContainer.viewContext
         
         let fetchRequest =
-          NSFetchRequest<NSManagedObject>(entityName: "Task")
+            NSFetchRequest<NSManagedObject>(entityName: "Task")
         
         do {
-          tasks = try managedContext.fetch(fetchRequest)
+            tasks = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
-          print("Could not fetch. \(error), \(error.userInfo)")
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        var nearest: Task?
+        nearest = nil
+        
+        for task in tasks {
+            let t = task as! Task
+            if t.status != "Done"  {
+                nearest = t
+            }
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy\nHH:mm"
+        if nearest != nil {
+            for task in tasks {
+                let t = task as! Task
+                let currentDate = dateFormatter.date(from: t.date!)
+                let nearestDate = dateFormatter.date(from: nearest!.date!)
+                if currentDate! < nearestDate! && t.status != "Done"  {
+                    nearest = t
+                }
+            }
+        }
+        
+        let userDefaults = UserDefaults(suiteName: "group.taskTrackerApp")
+        if nearest != nil {
+            userDefaults?.setValue(nearest!.heading, forKey: "heading")
+            userDefaults?.setValue(nearest!.date, forKey: "date")
+        } else {
+            userDefaults?.setValue(nil, forKey: "heading")
+            userDefaults?.setValue(nil, forKey: "date")
+        }
+        
         tableView.reloadData()
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -175,14 +210,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.heading.text = task.value(forKeyPath: "heading") as? String
         cell.date.text = task.value(forKeyPath: "date") as? String
         cell.status.text = task.value(forKeyPath: "status") as? String
-        cell.status.textColor = UIColor.black
         if cell.status.text == "New" {
-            cell.status.textColor = UIColor.white
-            cell.statusBackground.backgroundColor = UIColor.red
+            cell.statusBackground.backgroundColor = UIColor(red: 1, green: 0.41, blue: 0.38, alpha: 1)
         } else if cell.status.text == "In Progress" {
-            cell.statusBackground.backgroundColor = UIColor.yellow
+            cell.statusBackground.backgroundColor =  UIColor(red: 0.99, green: 0.99, blue: 0.58, alpha: 1)
         } else if cell.status.text == "Done" {
-            cell.statusBackground.backgroundColor = UIColor.green
+            cell.statusBackground.backgroundColor = UIColor(red: 0.46, green: 0.86, blue: 0.46, alpha: 1)
         }
         return cell
     }

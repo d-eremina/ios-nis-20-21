@@ -17,6 +17,8 @@ class CustomTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        statusBackground.layer.cornerRadius = 40;
+        statusBackground.layer.masksToBounds = true;
     }
 
 }
